@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>835</width>
-    <height>554</height>
+    <width>620</width>
+    <height>503</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>261</width>
-      <height>191</height>
+      <width>241</width>
+      <height>181</height>
      </rect>
     </property>
     <property name="mouseTracking">
@@ -60,8 +60,8 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>320</y>
+      <x>320</x>
+      <y>30</y>
       <width>211</width>
       <height>111</height>
      </rect>
@@ -103,14 +103,14 @@
    <widget class="QToolBox" name="toolBox">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>290</y>
+      <x>20</x>
+      <y>230</y>
       <width>221</width>
       <height>171</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page_3">
      <property name="geometry">
@@ -159,13 +159,17 @@
      </widget>
     </widget>
    </widget>
+   <zorder>stackedWidget</zorder>
+   <zorder>tabWidget</zorder>
+   <zorder>toolBox</zorder>
+   <zorder>textEdit_4</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>835</width>
+     <width>620</width>
      <height>21</height>
     </rect>
    </property>
