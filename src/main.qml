@@ -34,8 +34,12 @@ Window {
     Canvas {
         id: canvas
         anchors.top: tools.bottom
-        width: 500
-        height: 500
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
         property int lastX: 0
         property int lastY: 0
 
@@ -74,22 +78,45 @@ Window {
                 canvas.requestPaint()
             }
 
-            TextEdit {
-                id: textEdit
-                x: 190
-                y: 402
-                width: 120
-                height: 59
-                text: qsTr("Text Edit Canvas")
-                font.capitalization: Font.MixedCase
-                font.family: "Arial"
-                font.pointSize: 12
-                horizontalAlignment: Text.AlignLeft
-                textFormat: Text.AutoText
-                leftPadding: 0
-                cursorVisible: false
-                renderType: Text.NativeRendering
-                clip: false
+            Rectangle {
+                id: rectangle2
+                x: 111
+                y: 343
+                width: 137
+                height: 20
+                color: "#2088da"
+
+                Drag.active: dragArea.drag.active
+                Drag.hotSpot.x: 10
+                Drag.hotSpot.y: 10
+
+                MouseArea {
+                    id: dragArea
+                    anchors.topMargin: 0
+                    anchors.fill: parent
+
+                    drag.target: parent
+                }
+
+
+                TextEdit {
+                    id: textEdit
+                    x: 0
+                    width: 137
+                    height: 59
+                    text: qsTr("Text Edit Canvas")
+                    anchors.top: dragArea.bottom
+                    anchors.topMargin: 1
+                    font.capitalization: Font.MixedCase
+                    font.family: "Arial"
+                    font.pointSize: 12
+                    horizontalAlignment: Text.AlignLeft
+                    textFormat: Text.AutoText
+                    leftPadding: 0
+                    cursorVisible: false
+                    renderType: Text.NativeRendering
+                    clip: false
+                }
             }
         }
 
@@ -98,18 +125,18 @@ Window {
 
         Rectangle {
             id: rectangle1
-            x: 100
-            y: 100
+            x: 50
+            y: 50
             width: 137
             height: 20
             color: "#2088da"
 
-            Drag.active: dragArea.drag.active
+            Drag.active: dragArea2.drag.active
             Drag.hotSpot.x: 10
             Drag.hotSpot.y: 10
 
             MouseArea {
-                id: dragArea
+                id: dragArea2
                 anchors.fill: parent
 
                 drag.target: parent
