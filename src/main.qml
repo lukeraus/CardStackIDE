@@ -76,11 +76,11 @@ Window {
 
             TextEdit {
                 id: textEdit
-                x: 0
-                y: 0
+                x: 190
+                y: 402
                 width: 120
                 height: 59
-                text: qsTr("Text Edit")
+                text: qsTr("Text Edit Canvas")
                 font.capitalization: Font.MixedCase
                 font.family: "Arial"
                 font.pointSize: 12
@@ -93,67 +93,97 @@ Window {
             }
         }
 
+
+
+
         Rectangle {
-            id: rectangle
-            x: 138
-            y: 112
+            id: rectangle1
+            x: 100
+            y: 100
             width: 137
-            height: 200
-            color: "#ffffff"
+            height: 20
+            color: "#2088da"
 
+            Drag.active: dragArea.drag.active
+            Drag.hotSpot.x: 10
+            Drag.hotSpot.y: 10
 
-            SwipeView {
-                id: view
-                x: -138
-                y: -112
-
-                currentIndex: 0
+            MouseArea {
+                id: dragArea
                 anchors.fill: parent
 
-                Item {
-                    id: firstPage
-
-                    TextEdit {
-                        id: textEdit1
-                        width: 137
-                        height: 73
-                        text: qsTr("Text Edit 1")
-                        font.pixelSize: 12
-                    }
-                }
-                Item {
-                    id: secondPage
-
-                    TextEdit {
-                        id: textEdit2
-                        width: 137
-                        height: 75
-                        text: qsTr("Text Edit 2")
-                        font.pixelSize: 12
-                    }
-                }
-                Item {
-                    id: thirdPage
-
-                    TextEdit {
-                        id: textEdit3
-                        width: 137
-                        height: 75
-                        text: qsTr("Text Edit 3")
-                        font.pixelSize: 12
-                    }
-                }
+                drag.target: parent
             }
-            PageIndicator {
-                id: indicator
-                x: 88
-                y: 368
 
-                count: view.count
-                currentIndex: view.currentIndex
+            Rectangle {
+                id: rectangle
+                width: 137
+                height: 200
+                color: "#ffffff"
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.top: parent.top
+                anchors.topMargin: 20
+                border.color: "#0b0b0b"
 
-                anchors.bottom: view.bottom
-                anchors.horizontalCenter: parent.horizontalCenter
+
+                SwipeView {
+                    id: swipeView
+                    x: -138
+                    y: -112
+
+                    currentIndex: 0
+                    anchors.fill: parent
+
+                    Item {
+                        id: firstPage
+
+                        TextEdit {
+                            id: textEdit1
+                            width: 137
+                            height: 73
+                            text: qsTr("Text Edit 1")
+                            font.family: "Courier"
+                            font.pointSize: 12
+                        }
+                    }
+                    Item {
+                        id: secondPage
+
+                        TextEdit {
+                            id: textEdit2
+                            width: 137
+                            height: 75
+                            text: qsTr("Text Edit 2")
+                            font.family: "Courier"
+                            font.pointSize: 12
+                        }
+                    }
+                    Item {
+                        id: thirdPage
+
+                        TextEdit {
+                            id: textEdit3
+                            width: 137
+                            height: 75
+                            text: qsTr("Text Edit 3")
+                            font.family: "Courier"
+                            font.pointSize: 12
+                        }
+                    }
+                }
+
+                PageIndicator {
+                    id: indicator
+                    x: 68
+                    y: 377
+
+                    count: swipeView.count
+                    currentIndex: swipeView.currentIndex
+
+                    anchors.bottom: swipeView.bottom
+                    anchors.horizontalCenter: swipeView.horizontalCenter
+                }
             }
         }
 
