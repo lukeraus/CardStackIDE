@@ -4,7 +4,7 @@ import QtQuick.Controls 2.1
 
 Window {
     visible: true
-    width: 500
+    width: 540
     height: 540
     id: root
 
@@ -24,6 +24,19 @@ Window {
             text: "Save"
             onClicked: {
                 mouse.save()
+            }
+        }
+
+        Button {
+            id: newText
+            text: qsTr("New Text")
+            property int count: 0
+            onClicked: {
+                var component;
+                var cards;
+                component = Qt.createComponent("cards.qml");
+                cards = component.createObject(canvas, {"x": 100 + count, "y": 100 + count})
+                count+= 15;
             }
         }
 
@@ -78,145 +91,48 @@ Window {
                 canvas.requestPaint()
             }
 
-            Rectangle {
-                id: rectangle2
-                x: 111
-                y: 343
-                width: 137
-                height: 20
-                color: "#2088da"
+//            Rectangle {
+//                id: rectangleCanvas
+//                x: 111
+//                y: 343
+//                width: 137
+//                height: 20
+//                color: "#2088da"
 
-                Drag.active: dragArea.drag.active
-                Drag.hotSpot.x: 10
-                Drag.hotSpot.y: 10
+//                Drag.active: dragArea.drag.active
+//                Drag.hotSpot.x: 10
+//                Drag.hotSpot.y: 10
 
-                MouseArea {
-                    id: dragArea
-                    anchors.topMargin: 0
-                    anchors.fill: parent
+//                MouseArea {
+//                    id: dragArea
+//                    anchors.topMargin: 0
+//                    anchors.fill: parent
 
-                    drag.target: parent
-                }
+//                    drag.target: parent
+//                }
 
 
-                TextEdit {
-                    id: textEdit
-                    x: 0
-                    width: 137
-                    height: 59
-                    text: qsTr("Text Edit Canvas")
-                    anchors.top: dragArea.bottom
-                    anchors.topMargin: 1
-                    font.capitalization: Font.MixedCase
-                    font.family: "Arial"
-                    font.pointSize: 12
-                    horizontalAlignment: Text.AlignLeft
-                    textFormat: Text.AutoText
-                    leftPadding: 0
-                    cursorVisible: false
-                    renderType: Text.NativeRendering
-                    clip: false
-                }
-            }
+//                TextEdit {
+//                    id: textEdit
+//                    x: 0
+//                    width: 137
+//                    height: 59
+//                    text: qsTr("Text Edit Canvas")
+//                    anchors.top: dragArea.bottom
+//                    anchors.topMargin: 1
+//                    font.capitalization: Font.MixedCase
+//                    font.family: "Arial"
+//                    font.pointSize: 12
+//                    horizontalAlignment: Text.AlignLeft
+//                    textFormat: Text.AutoText
+//                    leftPadding: 0
+//                    cursorVisible: false
+//                    renderType: Text.NativeRendering
+//                    clip: false
+//                }
+//            }
         }
-
-
-
-
-        Rectangle {
-            id: rectangle1
-            x: 50
-            y: 50
-            width: 137
-            height: 20
-            color: "#2088da"
-
-            Drag.active: dragArea2.drag.active
-            Drag.hotSpot.x: 10
-            Drag.hotSpot.y: 10
-
-            MouseArea {
-                id: dragArea2
-                anchors.fill: parent
-
-                drag.target: parent
-            }
-
-            Rectangle {
-                id: rectangle
-                width: 137
-                height: 200
-                color: "#ffffff"
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.top: parent.top
-                anchors.topMargin: 20
-                border.color: "#0b0b0b"
-
-
-                SwipeView {
-                    id: swipeView
-                    x: -138
-                    y: -112
-
-                    currentIndex: 0
-                    anchors.fill: parent
-
-                    Item {
-                        id: firstPage
-
-                        TextEdit {
-                            id: textEdit1
-                            width: 137
-                            height: 73
-                            text: qsTr("Text Edit 1")
-                            font.family: "Courier"
-                            font.pointSize: 12
-                        }
-                    }
-                    Item {
-                        id: secondPage
-
-                        TextEdit {
-                            id: textEdit2
-                            width: 137
-                            height: 75
-                            text: qsTr("Text Edit 2")
-                            font.family: "Courier"
-                            font.pointSize: 12
-                        }
-                    }
-                    Item {
-                        id: thirdPage
-
-                        TextEdit {
-                            id: textEdit3
-                            width: 137
-                            height: 75
-                            text: qsTr("Text Edit 3")
-                            font.family: "Courier"
-                            font.pointSize: 12
-                        }
-                    }
-                }
-
-                PageIndicator {
-                    id: indicator
-                    x: 68
-                    y: 377
-
-                    count: swipeView.count
-                    currentIndex: swipeView.currentIndex
-
-                    anchors.bottom: swipeView.bottom
-                    anchors.horizontalCenter: swipeView.horizontalCenter
-                }
-            }
-        }
-
-
 
     }
-
 
 }
