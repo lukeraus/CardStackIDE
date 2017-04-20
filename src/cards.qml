@@ -63,8 +63,10 @@ Item {
                         id: textEdit1
                         text: qsTr("Text Edit 1")
                         anchors.fill: parent
+                        wrapMode: TextEdit.WordWrap
                         font.family: "Courier"
                         font.pointSize: 12
+                        opacity: (swipeView.currentIndex == 0) ? 1.0 : 0.0
                     }
                 }
                 Item {
@@ -74,9 +76,10 @@ Item {
                         id: textEdit2
                         text: qsTr("Text Edit 2")
                         anchors.fill: parent
-                        opacity: 1
+                        wrapMode: TextEdit.WordWrap
                         font.family: "Courier"
                         font.pointSize: 12
+                        opacity: (swipeView.currentIndex == 1) ? 1.0 : 0.0
                     }
                 }
                 Item {
@@ -84,10 +87,12 @@ Item {
 
                     TextEdit {
                         id: textEdit3
+                        wrapMode: TextEdit.WordWrap
                         text: qsTr("Text Edit 3")
                         anchors.fill: parent
                         font.family: "Courier"
                         font.pointSize: 12
+                        opacity: (swipeView.currentIndex == 2) ? 1.0 : 0.0
                     }
                 }
             }
