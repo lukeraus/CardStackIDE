@@ -47,6 +47,48 @@ Item {
             anchors.topMargin: 20
             border.color: "#0b0b0b"
 
+            Rectangle {
+                id: rectangleResize
+                x: 165
+                y: 199
+                width: 30
+                height: 30
+                anchors.rightMargin: -30
+                anchors.bottomMargin: -30
+                color: "#2088da"
+
+                MouseArea {
+                      id: mouseAreaLeft
+
+                      property int oldMouseX
+                      property int oldMouseY
+                      anchors.fill: parent
+                      hoverEnabled: true
+
+                      onPressed: {
+                          oldMouseX = mouseX
+                          oldMouseY = mouseY
+                      }
+
+                      onPositionChanged: {
+                          if (pressed) {
+                              console.log("Pressed")
+                              // TODO: fix so it changes whole texbox
+                              rectangleResize.x = rectangleResize.x + (mouseX - oldMouseX)
+                              rectangleResize.y = rectangleResize.y + (mouseY - oldMouseY)
+                              rectangleTextEdit.width = rectangleTextEdit.width + (mouseX - oldMouseX)
+                              textEdit1.width = textEdit1.width + (mouseX - oldMouseX)
+                              textEdit2.width = textEdit2.width + (mouseX - oldMouseX)
+                              textEdit3.width = textEdit3.width + (mouseX - oldMouseX)
+                              rectangleTextEdit.height = rectangleTextEdit.height + (mouseY - oldMouseY)
+                              textEdit1.height = textEdit1.height + (mouseY - oldMouseY)
+                              textEdit2.height = textEdit2.height + (mouseY - oldMouseY)
+                              textEdit3.height = textEdit3.height + (mouseY - oldMouseY)
+                          }
+                      }
+                }
+            }
+
 
             SwipeView {
                 id: swipeView
