@@ -3,6 +3,7 @@ import QtQuick.Controls 2.1
 
 Item {
     id: card1
+    property alias rectangleTextEdit: rectangleTextEdit
 
     Rectangle {
         id: titleRectangle
@@ -18,8 +19,8 @@ Item {
 
         Button {
             id: closeText
-            text: qsTr("X")
             x: 145
+            text: qsTr("X")
             y: 0
             width: 20
             height: 20
@@ -36,119 +37,110 @@ Item {
             drag.target: parent
         }
 
+
         Rectangle {
-            id: rectangleTextEdit
+            id: rectangleResize
+            color: "#ffffff"
+            border.width: 7
             width: 165
             height: 200
-            color: "#ffffff"
+            border.color: "#2088da"
             anchors.left: parent.left
             anchors.leftMargin: 0
             anchors.top: parent.top
             anchors.topMargin: 20
-            border.color: "#0b0b0b"
 
-            Rectangle {
-                id: rectangleResize
-                x: 165
-                y: 199
-                width: 30
-                height: 30
-                anchors.rightMargin: -30
-                anchors.bottomMargin: -30
-                color: "#2088da"
+            MouseArea {
+                  id: mouseAreaLeft
 
-                MouseArea {
-                      id: mouseAreaLeft
+                  property int oldMouseX
+                  property int oldMouseY
+                  anchors.fill: parent
+                  hoverEnabled: true
 
-                      property int oldMouseX
-                      property int oldMouseY
-                      anchors.fill: parent
-                      hoverEnabled: true
+                  onPressed: {
+                      oldMouseX = mouseX
+                      oldMouseY = mouseY
+                  }
 
-                      onPressed: {
+                  onPositionChanged: {
+                      if (pressed) {
+                          rectangleResize.width = rectangleResize.width + (mouseX - oldMouseX)
+                          titleRectangle.width = titleRectangle.width + (mouseX - oldMouseX)
+                          closeText.x = closeText.x + (mouseX - oldMouseX)
                           oldMouseX = mouseX
+                          rectangleResize.height = rectangleResize.height + (mouseY - oldMouseY)
                           oldMouseY = mouseY
                       }
-
-                      onPositionChanged: {
-                          if (pressed) {
-                              console.log("Pressed")
-                              // TODO: fix so it changes whole texbox
-                              rectangleResize.x = rectangleResize.x + (mouseX - oldMouseX)
-                              rectangleResize.y = rectangleResize.y + (mouseY - oldMouseY)
-                              rectangleTextEdit.width = rectangleTextEdit.width + (mouseX - oldMouseX)
-                              textEdit1.width = textEdit1.width + (mouseX - oldMouseX)
-                              textEdit2.width = textEdit2.width + (mouseX - oldMouseX)
-                              textEdit3.width = textEdit3.width + (mouseX - oldMouseX)
-                              rectangleTextEdit.height = rectangleTextEdit.height + (mouseY - oldMouseY)
-                              textEdit1.height = textEdit1.height + (mouseY - oldMouseY)
-                              textEdit2.height = textEdit2.height + (mouseY - oldMouseY)
-                              textEdit3.height = textEdit3.height + (mouseY - oldMouseY)
-                          }
-                      }
-                }
+                  }
             }
 
-
-            SwipeView {
-                id: swipeView
-                x: -138
-                y: -112
-
-                currentIndex: 0
+            Rectangle {
+                id: rectangleTextEdit
+                color: "#ffffff"
+                anchors.rightMargin: 7
+                anchors.leftMargin: 7
+                anchors.bottomMargin: 7
+                anchors.topMargin: 0
                 anchors.fill: parent
+                border.color: "#0b0b0b"
 
-                Item {
-                    id: firstPage
+                SwipeView {
+                    id: swipeView
 
-                    TextEdit {
-                        id: textEdit1
-                        text: qsTr("Text Edit 1")
-                        anchors.fill: parent
-                        wrapMode: TextEdit.WordWrap
-                        font.family: "Courier"
-                        font.pointSize: 12
-                        opacity: (swipeView.currentIndex == 0) ? 1.0 : 0.0
+                    currentIndex: 0
+                    anchors.fill: parent
+
+                    Item {
+                        id: firstPage
+
+                        TextEdit {
+                            id: textEdit1
+                            text: qsTr("Text Edit 1")
+                            anchors.fill: parent
+                            wrapMode: TextEdit.WordWrap
+                            font.family: "Courier"
+                            font.pointSize: 12
+                            opacity: (swipeView.currentIndex == 0) ? 1.0 : 0.0
+                        }
+                    }
+                    Item {
+                        id: secondPage
+
+                        TextEdit {
+                            id: textEdit2
+                            text: qsTr("Text Edit 2")
+                            anchors.fill: parent
+                            wrapMode: TextEdit.WordWrap
+                            font.family: "Courier"
+                            font.pointSize: 12
+                            opacity: (swipeView.currentIndex == 1) ? 1.0 : 0.0
+                        }
+                    }
+                    Item {
+                        id: thirdPage
+
+                        TextEdit {
+                            id: textEdit3
+                            wrapMode: TextEdit.WordWrap
+                            text: qsTr("Text Edit 3")
+                            anchors.fill: parent
+                            font.family: "Courier"
+                            font.pointSize: 12
+                            opacity: (swipeView.currentIndex == 2) ? 1.0 : 0.0
+                        }
                     }
                 }
-                Item {
-                    id: secondPage
 
-                    TextEdit {
-                        id: textEdit2
-                        text: qsTr("Text Edit 2")
-                        anchors.fill: parent
-                        wrapMode: TextEdit.WordWrap
-                        font.family: "Courier"
-                        font.pointSize: 12
-                        opacity: (swipeView.currentIndex == 1) ? 1.0 : 0.0
-                    }
+                PageIndicator {
+                    id: indicator
+
+                    count: swipeView.count
+                    currentIndex: swipeView.currentIndex
+
+                    anchors.bottom: swipeView.bottom
+                    anchors.horizontalCenter: swipeView.horizontalCenter
                 }
-                Item {
-                    id: thirdPage
-
-                    TextEdit {
-                        id: textEdit3
-                        wrapMode: TextEdit.WordWrap
-                        text: qsTr("Text Edit 3")
-                        anchors.fill: parent
-                        font.family: "Courier"
-                        font.pointSize: 12
-                        opacity: (swipeView.currentIndex == 2) ? 1.0 : 0.0
-                    }
-                }
-            }
-
-            PageIndicator {
-                id: indicator
-                x: 68
-                y: 377
-
-                count: swipeView.count
-                currentIndex: swipeView.currentIndex
-
-                anchors.bottom: swipeView.bottom
-                anchors.horizontalCenter: swipeView.horizontalCenter
             }
         }
     }
