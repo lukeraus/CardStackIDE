@@ -2,7 +2,6 @@ TEMPLATE = app
 
 QT += qml quick
 CONFIG += c++11
-CONFIG += static
 
 SOURCES += main.cpp \
     mousememory.cpp

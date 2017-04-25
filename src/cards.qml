@@ -101,7 +101,7 @@ Item {
                             wrapMode: TextEdit.WordWrap
                             font.family: "Courier"
                             font.pointSize: 12
-                            opacity: (swipeView.currentIndex == 0) ? 1.0 : 0.0
+                            visible: (swipeView.currentIndex == 0) ? true : false
                         }
                     }
                     Item {
@@ -114,7 +114,7 @@ Item {
                             wrapMode: TextEdit.WordWrap
                             font.family: "Courier"
                             font.pointSize: 12
-                            opacity: (swipeView.currentIndex == 1) ? 1.0 : 0.0
+                            visible: (swipeView.currentIndex == 1) ? true : false
                         }
                     }
                     Item {
@@ -127,7 +127,7 @@ Item {
                             anchors.fill: parent
                             font.family: "Courier"
                             font.pointSize: 12
-                            opacity: (swipeView.currentIndex == 2) ? 1.0 : 0.0
+                            visible: (swipeView.currentIndex == 2) ? true : false
                         }
                     }
                 }
