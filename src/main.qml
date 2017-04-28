@@ -11,6 +11,7 @@ Window {
 
     Row {
         id: tools
+        z: 2
 
         Button {
             id: clear
@@ -50,22 +51,17 @@ Window {
     }
 
     Flickable {
+        z: 1
         id: scrolling
+        anchors.fill: parent
         boundsBehavior: Flickable.DragAndOvershootBounds
         interactive: drawSwitch.checked ? false : true
-        anchors.top: tools.bottom
-        anchors.left: parent.left
-        anchors.leftMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
         contentWidth: canvas.width; contentHeight: canvas.height
 
         Canvas {
             id: canvas
-            width: 1000
-            height: 1000
+            width: 2000
+            height: 2000
             x: 0
             y: 0
             property int lastX: 0
