@@ -7,7 +7,7 @@ MouseMemory::MouseMemory(QObject *parent) : QObject(parent)
 
 void MouseMemory::test()
 {
-    qDebug() << "Hello From C++";
+//    qDebug() << "Hello From C++";
 }
 
 void MouseMemory::clear()
@@ -23,7 +23,7 @@ void MouseMemory::save()
 void MouseMemory::add(double x, double y)
 {
     QPoint p(x, y);
-    qDebug() << "Adding " << p;
+//    qDebug() << "Adding " << p;
 }
 
 void MouseMemory::add(QPointF point)

@@ -50,60 +50,79 @@ Window {
 
     }
 
-    Flickable {
-        z: 1
-        id: scrolling
+    MultiPointTouchArea {
+        id: t_area
         anchors.fill: parent
-        boundsBehavior: Flickable.DragAndOvershootBounds
-        interactive: drawSwitch.checked ? false : true
-        contentWidth: canvas.width; contentHeight: canvas.height
-
-        Canvas {
-            id: canvas
-            width: 2000
-            height: 2000
-            x: 0
-            y: 0
-            property int lastX: 0
-            property int lastY: 0
-
-            function clear() {
-                var ctx = getContext("2d")
-                ctx.reset()
-                canvas.requestPaint()
-                mouse.clear()
+        onPressed: {
+            if(point2.pressed && point1.pressed){
+                drawSwitch.checked = false
+            } else {
+                drawSwitch.checked = true
             }
 
-            onPaint: {
-                // Do something
-                var ctx = getContext("2d")
-                ctx.lineWidth = 2
-                ctx.strokeStyle = color.red
-                ctx.beginPath()
-                ctx.moveTo(lastX, lastY)
-                lastX = area.mouseX
-                lastY = area.mouseY
-                ctx.lineTo(lastX, lastY)
-                ctx.stroke()
+        }
 
-                mouse.test()
-                mouse.add(lastX, lastY)
-            }
+        touchPoints: [
+            TouchPoint { id: point1},
+            TouchPoint { id: point2}
+        ]
 
-            MouseArea {
-                id: area
-                anchors.fill: canvas
-                enabled: drawSwitch.checked ? true : false
-                onPressed: {
-                    canvas.lastX = mouseX
-                    canvas.lastY = mouseY
-                }
+        Flickable {
+            z: 1
+            id: scrolling
+            anchors.fill: parent
+            boundsBehavior: Flickable.DragAndOvershootBounds
+            interactive: drawSwitch.checked ? false : true
+            contentWidth: canvas.width; contentHeight: canvas.height
 
-                onPositionChanged: {
+            Canvas {
+                id: canvas
+                width: 2000
+                height: 2000
+                x: 0
+                y: 0
+                property int lastX: 0
+                property int lastY: 0
+
+
+                function clear() {
+                    var ctx = getContext("2d")
+                    ctx.reset()
                     canvas.requestPaint()
+                    mouse.clear()
                 }
-            }
 
+                onPaint: {
+                    // Do something
+                    var ctx = getContext("2d")
+                    ctx.lineWidth = 2
+                    ctx.strokeStyle = color.red
+                    ctx.beginPath()
+                    ctx.moveTo(lastX, lastY)
+                    lastX = area.mouseX
+                    lastY = area.mouseY
+                    ctx.lineTo(lastX, lastY)
+                    ctx.stroke()
+
+                    mouse.test()
+                    mouse.add(lastX, lastY)
+                }
+
+                MouseArea {
+                    id: area
+                    anchors.fill: canvas
+                    enabled: drawSwitch.checked ? true : false
+                    onPressed: {
+                        canvas.lastX = mouseX
+                        canvas.lastY = mouseY
+                    }
+
+                    onPositionChanged: {
+                        canvas.requestPaint()
+                    }
+                }
+
+            }
         }
     }
 
