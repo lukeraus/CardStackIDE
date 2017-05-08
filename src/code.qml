@@ -9,7 +9,7 @@ Item {
         id: titleRectangle
         x: 0
         y: 0
-        width: 145
+        width: 430
         height: 20
         color: "#2088da"
 
@@ -17,9 +17,18 @@ Item {
         Drag.hotSpot.x: 10
         Drag.hotSpot.y: 10
 
+        Text{
+            id: titleText
+            x: 8
+            y: 3
+            color: "#ffffff"
+            text: qsTr("Code")
+            elide: Text.ElideMiddle
+        }
+
         Button {
             id: closeText
-            x: 145
+            x: 430
             text: qsTr("X")
             y: 0
             width: 20
@@ -32,7 +41,6 @@ Item {
 
         MouseArea {
             id: dragAreaTitle
-            width: 145
             anchors.fill: parent
             drag.target: parent
         }
@@ -42,8 +50,8 @@ Item {
             id: rectangleResize
             color: "#ffffff"
             border.width: 7
-            width: 165
-            height: 200
+            width: 450
+            height: 325
             border.color: "#2088da"
             anchors.left: parent.left
             anchors.leftMargin: 0
@@ -96,7 +104,19 @@ Item {
 
                         TextEdit {
                             id: textEdit1
-                            text: qsTr("Text Edit 1")
+                            text: qsTr("
+class OthelloGameState:
+    def __init__(self, rows: int,
+                       columns: int):
+        self._ROWS = rows
+        self._COLUMNS = columns
+
+    def move(self, row: int, column: int):
+        if not self._check_for_open_move():
+            self._change_turns()
+            raise NoValidMoves
+        elif self._[row][column] != '.':
+            raise CellNotEmpty")
                             anchors.fill: parent
                             wrapMode: TextEdit.WordWrap
                             font.family: "Courier"

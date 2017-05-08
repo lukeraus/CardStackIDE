@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>cards.qml</file>
+        <file>code.qml</file>
+        <file>search.qml</file>
+        <file>issue.qml</file>
     </qresource>
 </RCC>

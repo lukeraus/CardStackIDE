@@ -2,11 +2,10 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.1
 
-
 Window {
     visible: true
-    width: 540
-    height: 540
+    width: 650
+    height: 600
     id: root
 
     Row {
@@ -31,14 +30,38 @@ Window {
 
         Button {
             id: newText
-            text: qsTr("New Text")
+            text: qsTr("Code")
             property int count: 0
             onClicked: {
                 var component;
                 var cards;
-                component = Qt.createComponent("cards.qml");
+                component = Qt.createComponent("code.qml");
                 cards = component.createObject(canvas, {"x": 100 + count, "y": 100 + count})
                 count+= 15;
+            }
+        }
+
+        Button {
+            id: searchText
+            text: qsTr("Search History")
+            onClicked: {
+                var component;
+                var cards;
+                component = Qt.createComponent("search.qml");
+                cards = component.createObject(canvas, {"x": 100 + newText.count, "y": 100 + newText.count})
+                newText.count+= 15;
+            }
+        }
+
+        Button {
+            id: issueText
+            text: qsTr("Issues")
+            onClicked: {
+                var component;
+                var cards;
+                component = Qt.createComponent("issue.qml");
+                cards = component.createObject(canvas, {"x": 100 + newText.count, "y": 100 + newText.count})
+                newText.count+= 15;
             }
         }
 
