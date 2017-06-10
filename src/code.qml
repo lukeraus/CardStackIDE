@@ -45,7 +45,6 @@ Item {
             drag.target: parent
         }
 
-
         Rectangle {
             id: rectangleResize
             color: "#ffffff"
@@ -83,85 +82,124 @@ Item {
                   }
             }
 
-            Rectangle {
-                id: rectangleTextEdit
-                color: "#ffffff"
-                anchors.rightMargin: 7
-                anchors.leftMargin: 7
-                anchors.bottomMargin: 7
-                anchors.topMargin: 0
-                anchors.fill: parent
-                border.color: "#0b0b0b"
-
-                SwipeView {
-                    id: swipeView
-
-                    currentIndex: 0
+                Rectangle {
+                    id: rectangleTextEdit
+                    color: "#ffffff"
+                    anchors.rightMargin: 7
+                    anchors.leftMargin: 7
+                    anchors.bottomMargin: 7
+                    anchors.topMargin: 0
                     anchors.fill: parent
+                    border.color: "#0b0b0b"
 
-                    Item {
-                        id: firstPage
-
-                        TextEdit {
-                            id: textEdit1
-                            text: qsTr("
-class OthelloGameState:
-    def __init__(self, rows: int,
-                       columns: int):
-        self._ROWS = rows
-        self._COLUMNS = columns
-
-    def move(self, row: int, column: int):
-        if not self._check_for_open_move():
-            self._change_turns()
-            raise NoValidMoves
-        elif self._[row][column] != '.':
-            raise CellNotEmpty")
-                            anchors.fill: parent
-                            wrapMode: TextEdit.WordWrap
-                            font.family: "Courier"
-                            font.pointSize: 12
-                            visible: (swipeView.currentIndex == 0) ? true : false
+                    PinchArea {
+                        id: t_area
+                        anchors.fill: parent
+                        property real initialWidth
+                        property real initialHeight
+                        property real last_pinch: 1
+                        onPinchStarted: {
+                            initialWidth = rectangleResize.width
+                            initialHeight = rectangleResize.height
                         }
-                    }
-                    Item {
-                        id: secondPage
 
-                        TextEdit {
-                            id: textEdit2
-                            text: qsTr("Text Edit 2")
-                            anchors.fill: parent
-                            wrapMode: TextEdit.WordWrap
-                            font.family: "Courier"
-                            font.pointSize: 12
-                            visible: (swipeView.currentIndex == 1) ? true : false
+                        onPinchUpdated: {
+                            console.log("Pinch updating")
+                            console.log(pinch.scale)
+                            if (last_pinch > pinch.scale){
+                                if ((last_pinch - pinch.scale) > 0.02){
+                                    console.log("shrink")
+                                    rectangleResize.width = rectangleResize.width - 10
+                                    titleRectangle.width = titleRectangle.width - 10
+                                    closeText.x = closeText.x - 10
+                                    rectangleResize.height = rectangleResize.height - 10
+                                    last_pinch = pinch.scale
+                                }
+                            } else {
+                                if ((pinch.scale - last_pinch) > 0.02){
+                                    console.log("grow")
+                                    rectangleResize.width = rectangleResize.width + 10
+                                    titleRectangle.width = titleRectangle.width + 10
+                                    closeText.x = closeText.x + 10
+                                    rectangleResize.height = rectangleResize.height + 10
+                                    last_pinch = pinch.scale
+                                }
+                            }
                         }
-                    }
-                    Item {
-                        id: thirdPage
-
-                        TextEdit {
-                            id: textEdit3
-                            wrapMode: TextEdit.WordWrap
-                            text: qsTr("Text Edit 3")
-                            anchors.fill: parent
-                            font.family: "Courier"
-                            font.pointSize: 12
-                            visible: (swipeView.currentIndex == 2) ? true : false
+                        onPinchFinished: {
+                            console.log("pinch finish")
                         }
+
+                            SwipeView {
+                                id: swipeView
+
+                                currentIndex: 0
+                                anchors.fill: parent
+
+                                Item {
+                                    id: firstPage
+
+                                    TextEdit {
+                                        id: textEdit1
+                                        text: qsTr("
+    class OthelloGameState:
+        def __init__(self, rows: int,
+                           columns: int):
+            self._ROWS = rows
+            self._COLUMNS = columns
+
+        def move(self, row: int, column: int):
+            if not self._check_for_open_move():
+                self._change_turns()
+                raise NoValidMoves
+            elif self._[row][column] != '.':
+                raise CellNotEmpty")
+                                        anchors.fill: parent
+                                        wrapMode: TextEdit.WordWrap
+                                        font.family: "Courier"
+                                        font.pointSize: 12
+                                        visible: (swipeView.currentIndex == 0) ? true : false
+                                    }
+                                }
+                                Item {
+                                    id: secondPage
+
+                                    TextEdit {
+                                        id: textEdit2
+                                        text: qsTr("Text Edit 2")
+                                        anchors.fill: parent
+                                        wrapMode: TextEdit.WordWrap
+                                        font.family: "Courier"
+                                        font.pointSize: 12
+                                        visible: (swipeView.currentIndex == 1) ? true : false
+                                    }
+                                }
+                                Item {
+                                    id: thirdPage
+
+                                    TextEdit {
+                                        id: textEdit3
+                                        wrapMode: TextEdit.WordWrap
+                                        text: qsTr("Text Edit 3")
+                                        anchors.fill: parent
+                                        font.family: "Courier"
+                                        font.pointSize: 12
+                                        visible: (swipeView.currentIndex == 2) ? true : false
+                                    }
+                                }
+                            }
+                        }
+
+                    PageIndicator {
+                        id: indicator
+
+                        count: swipeView.count
+                        currentIndex: swipeView.currentIndex
+
+                        anchors.bottom: t_area.bottom
+                        anchors.horizontalCenter: t_area.horizontalCenter
                     }
-                }
-
-                PageIndicator {
-                    id: indicator
-
-                    count: swipeView.count
-                    currentIndex: swipeView.currentIndex
-
-                    anchors.bottom: swipeView.bottom
-                    anchors.horizontalCenter: swipeView.horizontalCenter
                 }
             }
-        }
     }
 }

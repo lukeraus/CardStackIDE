@@ -100,8 +100,8 @@ Window {
 
             Canvas {
                 id: canvas
-                width: 2000
-                height: 2000
+                width: 2500
+                height: 2500
                 x: 0
                 y: 0
                 property int lastX: 0
